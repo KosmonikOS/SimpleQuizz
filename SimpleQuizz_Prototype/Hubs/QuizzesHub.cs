@@ -20,5 +20,9 @@ namespace SimpleQuizz_Prototype.Hubs
         {
             await Clients.Client(hostId).SendAsync("GetAnswer", Context.ConnectionId, answer);
         }
+        public async Task SendParticipantName(string hostId, string name)
+        {
+            await Clients.Client(hostId).SendAsync("GetParticipantName", Context.ConnectionId, name);
+        }
     }
 }

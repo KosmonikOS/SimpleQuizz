@@ -15,7 +15,7 @@ while (Console.ReadLine() == "+")
         }
     };
     Console.WriteLine("Введите текст вопроса");
-    question.Options[3].Text = Console.ReadLine();
+    question.Text = Console.ReadLine();
     Console.WriteLine("Введите кол-во баллов");
     question.Points = Int32.Parse(Console.ReadLine() ?? "1");
     Console.WriteLine("Введите текст первого варианта ответа");
@@ -27,16 +27,14 @@ while (Console.ReadLine() == "+")
     Console.WriteLine("Введите текст четвертого варианта ответа");
     question.Options[3].Text = Console.ReadLine() ?? "";
     Console.WriteLine("Введите номер правильного ответа (1-4)");
-    var answer = Int32.Parse(Console.ReadLine() ?? "1") - 1;
-    question.Answer = answer >= 0 && answer <= 3 ? answer : 0;
+    var answer = Int32.Parse(Console.ReadLine() ?? "1");
+    question.Answer = answer > 0 && answer <= 4 ? answer : 1;
     questions.Add(question);
     Console.WriteLine("Введите + , чтобы добавить вопрос, или - чтобы продолжить");
 }
-Console.WriteLine("------------------------------------------------------------------------");
-
 Console.Clear();
 
-var quizzId = new Random().Next(0, 1000000).ToString().PadLeft(7,'0');
+var quizzId = new Random().Next(0, 1000000).ToString().PadLeft(7, '0');
 var connection = new HubConnectionBuilder()
     .WithUrl("https://localhost:7195/quizzes")
     .WithAutomaticReconnect().Build();
@@ -53,20 +51,26 @@ Console.WriteLine("Нажмите любую клавишу, чтобы нача
 
 Console.ReadLine();
 
-var participants = new Dictionary<string, int>();
+var participants = new Dictionary<string, Participant>();
 
 var currentQuestion = questions[0];
 
-connection.On("GetAnswer", (string participantId, int answer) =>
+connection.On("GetAnswer", (string participantId, string answer) =>
 {
-    if(currentQuestion.Answer == answer)
-        if (!participants.ContainsKey(participantId))
-            participants[participantId] = currentQuestion.Points;
-        else
-            participants[participantId]+= currentQuestion.Points;
+    var points = currentQuestion.Answer != Int32.Parse(answer)
+                ? 0 : currentQuestion.Points;
+    participants[participantId].Points += points;
+});
+connection.On("GetParticipantName", (string participantId, string participantName) =>
+{
+    participants[participantId] = new Participant()
+    {
+        Name = participantName,
+        Points = 0
+    };
 });
 
-await connection.InvokeAsync("SendHostId", quizzId,connection.ConnectionId);
+await connection.InvokeAsync("SendHostId", quizzId, connection.ConnectionId);
 
 Console.Clear();
 
@@ -76,16 +80,17 @@ for (int i = 0; i < questions.Count; i++)
     Console.WriteLine(currentQuestion.Text);
     Console.WriteLine($"1) {currentQuestion.Options[0].Text}");
     Console.WriteLine($"2) {currentQuestion.Options[1].Text}");
-    Console.WriteLine($"2) {currentQuestion.Options[2].Text}");
-    Console.WriteLine($"3) {currentQuestion.Options[3].Text}");
-    await connection.InvokeAsync("StartNewQuestion", quizzId);
+    Console.WriteLine($"3) {currentQuestion.Options[2].Text}");
+    Console.WriteLine($"4) {currentQuestion.Options[3].Text}");
+    await connection.SendAsync("StartNewQuestion", quizzId);
     await Task.Delay(10000);
     Console.Clear();
 }
 Console.WriteLine("Итоги:");
 var place = 1;
-foreach(var kvp in participants.OrderBy(x => x.Value))
+foreach (var kvp in participants.OrderBy(x => x.Value.Points))
 {
-    Console.WriteLine($"{place}) {kvp.Key} {kvp.Value}");
+    Console.WriteLine($"{place}) {kvp.Value.Name} {kvp.Value.Points}");
     place++;
 }
+Console.ReadLine();

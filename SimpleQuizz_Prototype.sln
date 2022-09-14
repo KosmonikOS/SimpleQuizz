@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleQuizz_Prototype", "Si
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleQuizz_Prototype_Host", "SimpleQuizz_Prototype_Host\SimpleQuizz_Prototype_Host.csproj", "{5E0F3B2F-F99A-4D30-87F5-34BAEF64A058}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleQuizz_Prototype_Participant", "SimpleQuizz_Prototype_Participant\SimpleQuizz_Prototype_Participant.csproj", "{F097C905-EF78-4CF9-BFF4-327D63A3C498}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{5E0F3B2F-F99A-4D30-87F5-34BAEF64A058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E0F3B2F-F99A-4D30-87F5-34BAEF64A058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E0F3B2F-F99A-4D30-87F5-34BAEF64A058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F097C905-EF78-4CF9-BFF4-327D63A3C498}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F097C905-EF78-4CF9-BFF4-327D63A3C498}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F097C905-EF78-4CF9-BFF4-327D63A3C498}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F097C905-EF78-4CF9-BFF4-327D63A3C498}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

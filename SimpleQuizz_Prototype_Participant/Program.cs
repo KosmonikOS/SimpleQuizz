@@ -2,6 +2,8 @@
 
 Console.WriteLine("Введите код викторины , чтобы присоединиться");
 var quizzId = Console.ReadLine();
+Console.WriteLine("Введите свой никнейм");
+var nickName = Console.ReadLine();
 var connection = new HubConnectionBuilder()
     .WithUrl("https://localhost:7195/quizzes")
     .WithAutomaticReconnect().Build();
@@ -11,9 +13,10 @@ await connection.StartAsync();
 
 await connection.InvokeAsync("ConnectToQuizz", quizzId);
 
-connection.On("GetHostId",(string newHostId) =>
+connection.On("GetHostId",async (string newHostId) =>
 {
     hostId = newHostId;
+    await connection.SendAsync("SendParticipantName", hostId, nickName);
 });
 
 connection.On("NextQuestion", async () =>
@@ -23,7 +26,7 @@ connection.On("NextQuestion", async () =>
         Console.Clear();
         Console.WriteLine("Выбирите вариант ответа (1-4)");
         var answer = Console.ReadLine();
-        await connection.InvokeAsync("SendAnswer", hostId,answer);
+        await connection.SendAsync("SendAnswer", hostId,answer);
         Console.WriteLine("Ждем нового вопроса");
     }
 });
