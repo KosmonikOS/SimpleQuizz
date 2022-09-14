@@ -16,7 +16,7 @@ namespace SimpleQuizz_Prototype.Hubs
         {
             await Clients.OthersInGroup(connectionId).SendAsync("NextQuestion");
         }
-        public async Task SendAnswer(string hostId,int answer)
+        public async Task SendAnswer(string hostId,string answer)
         {
             await Clients.Client(hostId).SendAsync("GetAnswer", Context.ConnectionId, answer);
         }
