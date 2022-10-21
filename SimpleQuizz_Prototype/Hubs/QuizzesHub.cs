@@ -4,25 +4,29 @@ namespace SimpleQuizz_Prototype.Hubs
 {
     public class QuizzesHub : Hub
     {
-        public async Task ConnectToQuizz(string connectionId)
+        public async Task ConnectToQuizz(string quizzId)
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, connectionId);
+            await Groups.AddToGroupAsync(Context.ConnectionId, quizzId);
         }
-        public async Task SendHostId(string connectionId,string hostId)
+        public async Task SendHostIdToParticipants(string quizzId, string hostId)
         {
-            await Clients.OthersInGroup(connectionId).SendAsync("GetHostId",hostId);
+            await Clients.OthersInGroup(quizzId).SendAsync("GetHostId", hostId);
         }
-        public async Task StartNewQuestion(string connectionId)
+        public async Task SendQuestionToParticipants(string quizzId)
         {
-            await Clients.OthersInGroup(connectionId).SendAsync("NextQuestion");
+            await Clients.OthersInGroup(quizzId).SendAsync("NextQuestion");
         }
-        public async Task SendAnswer(string hostId,string answer)
+        public async Task SendAnswerToHost(string hostId, string answer)
         {
             await Clients.Client(hostId).SendAsync("GetAnswer", Context.ConnectionId, answer);
         }
         public async Task SendParticipantName(string hostId, string name)
         {
             await Clients.Client(hostId).SendAsync("GetParticipantName", Context.ConnectionId, name);
+        }
+        public async Task SendDisconnectionMessage(string quizzId)
+        {
+            await Clients.OthersInGroup(quizzId).SendAsync("DisconnectFromQuizz");
         }
     }
 }
