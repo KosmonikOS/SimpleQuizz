@@ -1,4 +1,4 @@
-﻿using SimpleQuizz_Prototype_Host.Helpers;
+﻿using SimpleQuizz_Prototype_Helpers.Helpers;
 using SimpleQuizz_Prototype_Participant.Interfaces;
 
 namespace SimpleQuizz_Prototype_Participant.Implementations;

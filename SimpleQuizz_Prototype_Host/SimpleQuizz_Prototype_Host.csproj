@@ -15,4 +15,8 @@
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleQuizz_Prototype_Helpers\SimpleQuizz_Prototype_Helpers.csproj" />
+  </ItemGroup>
+
 </Project>

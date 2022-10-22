@@ -1,5 +1,5 @@
-﻿using SimpleQuizz_Prototype_Host.Entities;
-using SimpleQuizz_Prototype_Host.Helpers;
+﻿using SimpleQuizz_Prototype_Helpers.Helpers;
+using SimpleQuizz_Prototype_Host.Entities;
 using SimpleQuizz_Prototype_Host.Interfaces;
 
 namespace SimpleQuizz_Prototype_Host.Implelentations;

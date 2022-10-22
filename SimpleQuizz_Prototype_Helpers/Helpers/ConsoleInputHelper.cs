@@ -1,4 +1,4 @@
-﻿namespace SimpleQuizz_Prototype_Host.Helpers;
+﻿namespace SimpleQuizz_Prototype_Helpers.Helpers;
 
 public static class ConsoleInputHelper
 {
