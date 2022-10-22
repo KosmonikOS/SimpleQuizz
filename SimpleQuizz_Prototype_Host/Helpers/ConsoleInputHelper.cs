@@ -1,6 +1,6 @@
 ﻿namespace SimpleQuizz_Prototype_Host.Helpers;
 
-internal static class ConsoleInputHelper
+public static class ConsoleInputHelper
 {
     public static void CheckInsertFailure(ref string input, Func<string, bool> failureCondition)
     {
