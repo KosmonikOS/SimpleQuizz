@@ -3,3 +3,4 @@
 var host = new QuizzHost();
 host.AddQuestions();
 await host.StartQuizzAsync();
+Console.ReadLine();
