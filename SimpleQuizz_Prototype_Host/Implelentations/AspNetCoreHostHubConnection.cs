@@ -29,7 +29,7 @@ internal class AspNetCoreHostHubConnection : IHostHubConnection
     }
     public async Task SendHostIdToParticipantsAsync()
     {
-        await connection.InvokeAsync("SendHostId", quizzId, connection.ConnectionId);
+        await connection.InvokeAsync("SendHostIdToParticipants", quizzId, connection.ConnectionId);
     }
     public async Task SendQuestionAsync()
     {

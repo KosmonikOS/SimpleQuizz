@@ -9,15 +9,15 @@ internal class ConsoleRender : IRender
     {
         Console.Clear();
         Console.WriteLine("Добро пожаловать в прототип SimpleQuizz");
-        Console.WriteLine("Сейчас начнется создание викторины");
-        Thread.Sleep(2000);
+        Console.WriteLine("Нажмите Enter, чтобы продолжить");
+        Console.ReadLine();
     }
     public void PrintQuizzInfo(string quizzId)
     {
         Console.Clear();
         Console.WriteLine($"Код викторины {quizzId}");
         Console.WriteLine("Ожидаем участников");
-        Console.WriteLine("Нажмите любую клавишу, чтобы начать");
+        Console.WriteLine("Нажмите Enter, чтобы начать");
         Console.ReadLine();
     }
     public void PrintParticipantInfo(Participant participant)
@@ -36,7 +36,8 @@ internal class ConsoleRender : IRender
     {
         Console.Clear();
         var winner = participants.MaxBy(x => x.Points);
-        Console.WriteLine($"Победитель: {winner.Name}");
+        if (winner != null)
+            Console.WriteLine($"Победитель: {winner.Name}");
         PrintParticipantsPoints(participants);
     }
     public void PrintQuestion(Question question)

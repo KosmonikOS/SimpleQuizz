@@ -31,6 +31,7 @@ internal class QuizzHost
     }
     public void AddQuestions()
     {
+        render.RenderQuizzStart();
         var continueAddition = true;
         while (continueAddition)
         {
@@ -55,12 +56,13 @@ internal class QuizzHost
         .ToString().PadLeft(7, '0');
     private void HandleGetAnswer(string participantId, string answer)
     {
-        participants[participantId].AddPoints(currentQuestion
-            .IsCorrectAnswer(Int32.Parse(answer)) ? 0 : currentQuestion.Points);
+        var r = currentQuestion.IsCorrectAnswer(Int32.Parse(answer));
+        participants[participantId].AddPoints(r ? currentQuestion.Points : 0);
     }
     private void HandleGetName(string participantId, string participantName)
     {
         participants[participantId] = new Participant(participantName);
+        //render.PrintParticipantInfo(participants[participantId]);
     }
 }
 
