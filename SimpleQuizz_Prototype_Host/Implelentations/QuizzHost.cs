@@ -20,8 +20,8 @@ internal class QuizzHost
         var quizzId = GenerateQuizzId();
         await hubConnection.ConnectToHubAsync();
         await hubConnection.ConnectToQuizzAsync(quizzId);
+        await hubConnection.MapHostToQuizzAsync();
         render.PrintQuizzInfo(quizzId);
-        await hubConnection.SendHostIdToParticipantsAsync();
         await ProcessQuizzAsync();
     }
     public async Task StopQuizzAsync()
@@ -62,7 +62,7 @@ internal class QuizzHost
     private void HandleGetName(string participantId, string participantName)
     {
         participants[participantId] = new Participant(participantName);
-        //render.PrintParticipantInfo(participants[participantId]);
+        render.PrintParticipantInfo(participants[participantId]);
     }
 }
 
