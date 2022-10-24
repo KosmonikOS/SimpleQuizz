@@ -31,7 +31,10 @@ internal class QuizzParticipant
         var cancellationToken = gamecancellationTokenSource.Token;
         while (true)
             if (cancellationToken.IsCancellationRequested)
+            {
+                render.PrintEndInfo();
                 return;
+            }
     }
     private async Task HandleGetHostId()
     {
