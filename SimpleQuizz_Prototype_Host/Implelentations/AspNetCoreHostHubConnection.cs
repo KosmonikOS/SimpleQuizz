@@ -14,7 +14,7 @@ internal class AspNetCoreHostHubConnection : IHostHubConnection
             .WithAutomaticReconnect().Build();
         connection.Reconnected += async (string? _) =>
         {
-            await MapHostToQuizzAsync();
+            await ConnectToQuizzAsync(quizzId);
         };
     }
     public async Task ConnectToHubAsync()
@@ -26,14 +26,10 @@ internal class AspNetCoreHostHubConnection : IHostHubConnection
         await SendDisconnectMessage();
         await connection.StopAsync();
     }
-    public async Task MapHostToQuizzAsync()
-    {
-        await connection.SendAsync("MapHostId", quizzId);
-    }
     public async Task ConnectToQuizzAsync(string quizzId)
     {
         this.quizzId = quizzId;
-        await connection.InvokeAsync("ConnectToQuizz", quizzId);
+        await connection.SendAsync("MapHostId", quizzId);
     }
     public async Task SendQuestionAsync()
     {

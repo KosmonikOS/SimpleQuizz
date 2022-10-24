@@ -3,7 +3,6 @@ internal interface IHostHubConnection
 {
     public Task ConnectToHubAsync();
     public Task DisconnectFromHubAsync();
-    public Task MapHostToQuizzAsync();
     public Task ConnectToQuizzAsync(string quizzId);
     public Task SendQuestionAsync();
     public void SubscribeOnEvent<T>(string eventName, Func<T, Task> handler);

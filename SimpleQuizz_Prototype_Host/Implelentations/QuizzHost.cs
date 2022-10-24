@@ -20,7 +20,6 @@ internal class QuizzHost
         var quizzId = GenerateQuizzId();
         await hubConnection.ConnectToHubAsync();
         await hubConnection.ConnectToQuizzAsync(quizzId);
-        await hubConnection.MapHostToQuizzAsync();
         render.PrintQuizzInfo(quizzId);
         await ProcessQuizzAsync();
     }
