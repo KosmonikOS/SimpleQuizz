@@ -35,10 +35,13 @@ internal class ConsoleRender : IRender
     public void PrintSummary(IEnumerable<Participant> participants)
     {
         Console.Clear();
-        var winner = participants.MaxBy(x => x.Points);
-        if (winner != null)
-            Console.WriteLine($"Победитель: {winner.Name}");
-        PrintParticipantsPoints(participants);
+        var winners = participants
+            .OrderByDescending(x => x.Points).Take(3);
+        Console.WriteLine("Победители:");
+        foreach (var winner in winners)
+        {
+            Console.WriteLine($"{winner.Name} {winner.Points} баллов");
+        }
     }
     public void PrintQuestion(Question question)
     {
