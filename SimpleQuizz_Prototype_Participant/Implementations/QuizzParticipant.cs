@@ -3,10 +3,10 @@
 namespace SimpleQuizz_Prototype_Participant.Implementations;
 internal class QuizzParticipant
 {
-    private IParticipantHubConnection hubConnection 
+    private IParticipantHubConnection hubConnection
         = new AspNetCoreParticipantHubConnection();
     private IRender render = new ConsoleRender();
-    private CancellationTokenSource gamecancellationTokenSource 
+    private CancellationTokenSource gamecancellationTokenSource
         = new CancellationTokenSource();
     private string name;
     public QuizzParticipant()
@@ -22,6 +22,7 @@ internal class QuizzParticipant
         name = render.RenderParticipantNameInsertion();
         await hubConnection.ConnectToHubAsync();
         await hubConnection.ConnectToQuizzAsync(quizzId);
+        await hubConnection.SendParticipantNameAsync(name);
         render.PrintWaitingInfo();
         ProcessQuizz();
     }
