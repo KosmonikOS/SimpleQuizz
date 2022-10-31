@@ -22,17 +22,17 @@ public class QuizzesHub : Hub
     {
         await Clients.OthersInGroup(quizzId).SendAsync("NextQuestion");
     }
-    public async Task SendAnswerToHost(string quizzId,string answer)
+    public async Task SendAnswerToHost(string quizzId, string answer, string participantId)
     {
         var hostId = hqMapper.GetHostId(quizzId);
         if (hostId is not null)
-            await Clients.Client(hostId).SendAsync("GetAnswer", Context.ConnectionId, answer);
+            await Clients.Client(hostId).SendAsync("GetAnswer", participantId, answer);
     }
-    public async Task SendParticipantName(string quizzId,string name)
+    public async Task SendParticipantInfoToHost(string quizzId, string name, string participantId)
     {
         var hostId = hqMapper.GetHostId(quizzId);
         if (hostId is not null)
-            await Clients.Client(hostId).SendAsync("GetParticipantName", Context.ConnectionId, name);
+            await Clients.Client(hostId).SendAsync("GetParticipantInfo", participantId, name);
     }
     public async Task SendDisconnectionMessage(string quizzId)
     {
