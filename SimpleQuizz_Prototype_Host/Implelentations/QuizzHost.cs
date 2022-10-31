@@ -12,7 +12,7 @@ internal class QuizzHost
     public QuizzHost()
     {
         hubConnection.SubscribeOnEvent<string, string>("GetAnswer", HandleGetAnswer);
-        hubConnection.SubscribeOnEvent<string, string>("GetParticipantName", HandleGetName);
+        hubConnection.SubscribeOnEvent<string, string>("GetParticipantInfo", HandleGetInfo);
         render.PrintStartInfo();
     }
     public async Task StartQuizzAsync()
@@ -58,7 +58,7 @@ internal class QuizzHost
         var r = currentQuestion.IsCorrectAnswer(Int32.Parse(answer));
         participants[participantId].AddPoints(r ? currentQuestion.Points : 0);
     }
-    private void HandleGetName(string participantId, string participantName)
+    private void HandleGetInfo(string participantId, string participantName)
     {
         participants[participantId] = new Participant(participantName);
         render.PrintParticipantInfo(participants[participantId]);
