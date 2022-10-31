@@ -30,13 +30,13 @@ internal class AspNetCoreParticipantHubConnection : IParticipantHubConnection
         this.quizzId = quizzId;
         await connection.SendAsync("ConnectToQuizz", quizzId);
     }
-    public async Task SendParticipantNameAsync(string name)
+    public async Task SendParticipantInfoAsync(string name, string participantId)
     {
-        await connection.SendAsync("SendParticipantName", quizzId, name);
+        await connection.SendAsync("SendParticipantInfoToHost", quizzId, name, participantId);
     }
-    public async Task SendAnswerAsync(int answer)
+    public async Task SendAnswerAsync(int answer, string participantId)
     {
-        await connection.SendAsync("SendAnswerToHost", quizzId, answer.ToString());
+        await connection.SendAsync("SendAnswerToHost", quizzId, answer.ToString(), participantId);
     }
     public void SubscribeOnEvent<T>(string eventName, Func<T, Task> handler)
     {

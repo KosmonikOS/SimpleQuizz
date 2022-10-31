@@ -9,10 +9,10 @@ internal class QuizzParticipant
     private CancellationTokenSource gamecancellationTokenSource
         = new CancellationTokenSource();
     private string name;
+    private string id = Guid.NewGuid().ToString();
     public QuizzParticipant()
     {
         render.PrintStartInfo();
-        hubConnection.SubscribeOnEvent("GetHostId", HandleGetHostId);
         hubConnection.SubscribeOnEvent("NextQuestion", HandleNextQuestion);
         hubConnection.SubscribeOnEvent("DisconnectFromQuizz", HandleDisconnectFromQuizz);
     }
@@ -22,7 +22,7 @@ internal class QuizzParticipant
         name = render.RenderParticipantNameInsertion();
         await hubConnection.ConnectToHubAsync();
         await hubConnection.ConnectToQuizzAsync(quizzId);
-        await hubConnection.SendParticipantNameAsync(name);
+        await hubConnection.SendParticipantInfoAsync(name,id);
         render.PrintWaitingInfo();
         ProcessQuizz();
     }
@@ -36,14 +36,10 @@ internal class QuizzParticipant
                 return;
             }
     }
-    private async Task HandleGetHostId()
-    {
-        await hubConnection.SendParticipantNameAsync(name);
-    }
     private async Task HandleNextQuestion()
     {
         var answer = render.RenderAnswerInsertion();
-        await hubConnection.SendAnswerAsync(answer);
+        await hubConnection.SendAnswerAsync(answer,id);
     }
     private async Task HandleDisconnectFromQuizz()
     {
