@@ -15,6 +15,10 @@ Please note that this project is a prototype and currently only has a console us
 *   .NET 6
 *   SignalR
 
+## Design
+
+This project was made to practice object-oriented design. Therefore, it was first fully designed using a UML diagram.
+
 ## Getting Started
 
 To get started with this project, clone the repository and open it in Visual Studio. Restore the NuGet packages and build the solution.
